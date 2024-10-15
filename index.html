@@ -26,9 +26,14 @@
         /* Estilos para el título */
         h1 {
             font-size: 32px;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             color: #ffffff;
             text-shadow: 4px 4px #ff33a2, 0px 0px 10px #000000;
+        }
+
+        /* Estilos para el texto del día */
+        #dia-semana {
+            display: inline;
         }
 
         /* Estilos para el botón */
@@ -76,9 +81,14 @@
 
         img {
             width: 100%;
-            max-width: 400px;
+            max-width: 600px;
             height: auto;
             border: 4px solid #ffffff;
+        }
+
+        /* Clase especial para imágenes más grandes */
+        .especial-dia {
+            max-width: 600px;
         }
 
         /* Ajustes de responsividad */
@@ -101,7 +111,7 @@
 <body>
 
     <!-- Imagen de Paquita Salas centrada arriba -->
-    <img src="images/paquita_salas.png" alt="Paquita Salas" style="max-width: 200px;">
+    <img id="paquita-img" src="images/paquita_salas.png" alt="Paquita Salas" style="max-width: 200px;">
 
     <!-- Texto del día de la semana -->
     <h1>Lo siento, solo es <span id="dia-semana"></span></h1>
@@ -125,8 +135,34 @@
             return dias[fecha.getDay()];
         }
 
+        // Función para cambiar el mensaje y la imagen según el día de la semana
+        function cambiarMensajeSegunDia(diaSemana) {
+            const mensajeDia = document.getElementById('dia-semana');
+            const paquitaImg = document.getElementById('paquita-img');
+            
+            // Resetear cualquier clase especial
+            paquitaImg.classList.remove('especial-dia');
+
+            if (diaSemana === 'viernes') {
+                mensajeDia.textContent = '¡Es vieeeeeeeeeeeeeeeernes!';
+                paquitaImg.src = 'images/magui_salas.jpg'; // Imagen especial para viernes
+                paquitaImg.classList.add('especial-dia'); // Aumentar tamaño para viernes
+            } else if (diaSemana === 'sábado') {
+                mensajeDia.textContent = '¿Qué haces aquí? Es sábado, tira a socializar.';
+                paquitaImg.src = 'images/magui_salas.jpg'; // Imagen especial para sábado
+                paquitaImg.classList.add('especial-dia'); // Aumentar tamaño para sábado
+            } else if (diaSemana === 'domingo') {
+                mensajeDia.textContent = 'Mañana es lunes, una lloradita y a seguir.';
+                paquitaImg.src = 'images/paquita_salas.png'; // Imagen normal para domingo
+            } else {
+                mensajeDia.textContent = diaSemana; // Solo mostrar el día de la semana para lunes a jueves
+                paquitaImg.src = 'images/paquita_salas.png'; // Imagen normal para lunes a jueves
+            }
+        }
+
         // Mostrar el día de la semana al cargar la página
-        document.getElementById('dia-semana').textContent = obtenerDiaSemana();
+        const diaSemana = obtenerDiaSemana();
+        cambiarMensajeSegunDia(diaSemana);
 
         // Array con enlaces a los gifs de Paquita Salas
         const gifs = [
@@ -139,7 +175,15 @@
             "https://media0.giphy.com/media/f9R6CU2gYLppMe0gve/giphy.gif",
             "https://media1.giphy.com/media/3oFzme1oHVdYyNOzfi/giphy.gif",
             "https://media2.giphy.com/media/5n045t1xLi6ktHh8Jk/giphy.gif",
-            "https://media2.giphy.com/media/USsf3pBBT3WGyrYUGV/giphy.gif"
+            "https://media2.giphy.com/media/USsf3pBBT3WGyrYUGV/giphy.gif",
+            "https://media3.giphy.com/media/PRo62NlI8OnkYPmrb3/200w.webp?cid=ecf05e47fyy26bhjjwf5fmpr8p4kwqveejamxqyps3z83wky&ep=v1_gifs_related&rid=200w.webp&ct=g",
+            "https://media0.giphy.com/media/12xDzluRMR2eRESUio/200w.webp?cid=ecf05e47ylr7nbzzgmdyztjftkpoduplzdck1e5u4gsivjgv&ep=v1_gifs_related&rid=200w.webp&ct=g",
+            "https://media3.giphy.com/media/52FwwTBYLKolvzkj17/200w.webp?cid=ecf05e47ylr7nbzzgmdyztjftkpoduplzdck1e5u4gsivjgv&ep=v1_gifs_related&rid=200w.webp&ct=g",
+            "https://media1.giphy.com/media/uTrNTz85FKyJ5iZXyH/200w.webp",
+            "https://media3.giphy.com/media/L3Pop8UpGlPJTXcCz2/200w.webp?cid=ecf05e47qy4611yjj74m9v0rb2wdgpf4s375c61ftqmfg4qf&ep=v1_gifs_related&rid=200w.webp&ct=g",
+            "https://media3.giphy.com/media/L3Pop8UpGlPJTXcCz2/200w.webp?cid=ecf05e47qy4611yjj74m9v0rb2wdgpf4s375c61ftqmfg4qf&ep=v1_gifs_related&rid=200w.webp&ct=g",
+            "https://media3.giphy.com/media/MUlOGjRDQy9TGd5a6E/200w.webp?cid=ecf05e476ckd9yotqtne0dnrc0khrifuj1eqh6qamaj703cf&ep=v1_gifs_related&rid=200w.webp&ct=g",
+            "https://media3.giphy.com/media/9JlKcAPL4Ey1QzgmpG/200w.webp?cid=ecf05e476ckd9yotqtne0dnrc0khrifuj1eqh6qamaj703cf&ep=v1_gifs_related&rid=200w.webp&ct=g"
         ];
 
         // Obtener un gif aleatorio de Paquita Salas
@@ -173,3 +217,4 @@
 
 </body>
 </html>
+
