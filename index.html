@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No es Viernes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="day-message">Lo siento, solo es...</h1>
+    <button onclick="showPaquitaSalas()">Descubre qué Paquita Salas eres hoy</button>
+
+    <script>
+        function updateDayMessage() {
+            const days = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+            const today = new Date();
+            const day = days[today.getDay()];
+            document.getElementById('day-message').textContent = `Lo siento, solo es ${day}.`;
+        }
+
+        function showPaquitaSalas() {
+            alert('¡Hoy eres Paquita Salas en su mejor versión!');
+        }
+
+        // Actualizamos el mensaje al cargar la página
+        updateDayMessage();
+    </script>
+    
+</body>
+</html>
