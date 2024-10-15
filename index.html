@@ -3,101 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>No es Viernes - Paquita Salas</title>
+    <title>Descubre qué Paquita Salas eres hoy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* Fondo arcade con degradado suave */
         body {
-            font-family: 'Press Start 2P', cursive; /* Fuente retro */
+            background-color: #000000;
+            background-image: linear-gradient(135deg, #ff66c4 25%, #00ff99 100%);
+            color: #ffffff;
+            font-family: 'Press Start 2P', cursive;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #1a1a1a;
-            color: #fff;
+            justify-content: flex-start;
+            min-height: 100vh;
             text-align: center;
+            margin: 0;
+            padding: 200px 20px 20px;
+            box-sizing: border-box;
         }
+
+        /* Estilos para el título */
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #ffffff;
+            text-shadow: 4px 4px #ff33a2, 0px 0px 10px #000000;
         }
-        .pixel-button {
-            display: inline-block;
+
+        /* Estilos para el botón */
+        button {
+            background-color: #00ff99;
+            border: 4px solid #ffffff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 16px;
+            color: #000000;
             padding: 20px;
-            font-size: 1.2em;
-            color: #fff;
-            background-color: #333;
-            border: 5px solid #ff00ff; /* Estilo pixel art */
-            text-transform: uppercase;
+            border-radius: 5px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: background-color 0.3s, border-color 0.3s, transform 0.3s;
         }
-        .pixel-button:hover {
-            background-color: #ff00ff;
-            color: #333;
+
+        button:hover {
+            background-color: #ff33a2;
+            border-color: #ff66c4;
+            transform: scale(1.1);
+            color: #ffffff;
         }
-        #gif-container {
+
+        /* Spinner */
+        .spinner {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 6px solid #00ff99;
+            border-radius: 50%;
+            border-top-color: #ff66c4;
+            animation: spin 2s ease-in-out infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Contenedor para el gif */
+        .gif-container {
             margin-top: 20px;
-            max-width: 300px;
-            max-height: 300px;
-        }
-        img {
-            width: 100%;
-            height: auto;
             display: none;
         }
-        /* Responsive */
+
+        img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border: 4px solid #ffffff;
+        }
+
+        /* Ajustes de responsividad */
         @media (max-width: 600px) {
-            h1 {
-                font-size: 1.5em;
+            body {
+                padding: 20px;
             }
-            .pixel-button {
-                font-size: 1em;
+
+            h1 {
+                font-size: 24px;
+            }
+
+            button {
+                font-size: 14px;
                 padding: 15px;
             }
         }
     </style>
-    <!-- Incluye una fuente retro -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h1 id="day-message">Lo siento, solo es...</h1>
-    
-    <div class="pixel-button" onclick="showRandomGif()">
-        DESCUBRE QUÉ PAQUITA SALAS ERES HOY
-    </div>
+    <!-- Imagen de Paquita Salas centrada arriba -->
+    <img src="images/paquita_salas.png" alt="Paquita Salas" style="max-width: 200px;">
 
-    <div id="gif-container">
-        <img id="random-gif" src="" alt="GIF de Paquita Salas">
+    <!-- Texto del día de la semana -->
+    <h1>Lo siento, solo es <span id="dia-semana"></span></h1>
+
+    <!-- Botón para descubrir qué Paquita Salas eres hoy -->
+    <button id="descubre-btn">¿Qué Product Manager eres hoy?</button>
+
+    <!-- Spinner para mostrar mientras se carga el gif -->
+    <div class="spinner" id="spinner"></div>
+
+    <!-- Contenedor para mostrar el gif -->
+    <div class="gif-container" id="gif-container">
+        <img id="paquita-gif" src="" alt="Gif de Paquita Salas">
     </div>
 
     <script>
-        // Función para actualizar el mensaje según el día de la semana
-        function updateDayMessage() {
-            const days = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
-            const today = new Date();
-            const day = days[today.getDay()];
-            document.getElementById('day-message').textContent = `Lo siento, solo es ${day}.`;
+        // Función para obtener el día de la semana
+        function obtenerDiaSemana() {
+            const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+            const fecha = new Date();
+            return dias[fecha.getDay()];
         }
 
-        // Función para mostrar un GIF aleatorio de Paquita Salas
-        function showRandomGif() {
-            const gifs = [
-                'https://media.giphy.com/media/5WJ6SOKeSl3wmgExxi/giphy.gif', // GIF de Paquita saludando
-                'https://media.giphy.com/media/5ev4adJs7xMqgTuVXi/giphy.gif', // GIF de Paquita con gafas
-                'https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif', // GIF de Paquita asombrada
-                'https://media.giphy.com/media/9JrJxf8EboUwJ5c3Sc/giphy.gif', // GIF de Paquita celebrando
-                'https://media.giphy.com/media/3ov9jNziFTMfzSumAw/giphy.gif'  // GIF de Paquita en una reunión
-            ];
-            const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
-            const gifElement = document.getElementById('random-gif');
-            gifElement.src = randomGif;
-            gifElement.style.display = 'block'; // Mostrar el GIF
+        // Mostrar el día de la semana al cargar la página
+        document.getElementById('dia-semana').textContent = obtenerDiaSemana();
+
+        // Array con enlaces a los gifs de Paquita Salas
+        const gifs = [
+            "https://media3.giphy.com/media/V72HiNEcrP6r80Xc44/giphy.gif",
+            "https://media2.giphy.com/media/ORjDIEmkhATyZvBUwy/giphy.gif",
+            "https://media3.giphy.com/media/l378sDdYsRm1fQgDu/giphy.gif",
+            "https://media2.giphy.com/media/ZCxMnnXHv3ig7E8H2R/giphy.gif",
+            "https://media3.giphy.com/media/26vIdHgAJkOFSfF8A/giphy.gif",
+            "https://media2.giphy.com/media/gdrPoU0SWneYYCUoW1/giphy.gif",
+            "https://media0.giphy.com/media/f9R6CU2gYLppMe0gve/giphy.gif",
+            "https://media1.giphy.com/media/3oFzme1oHVdYyNOzfi/giphy.gif",
+            "https://media2.giphy.com/media/5n045t1xLi6ktHh8Jk/giphy.gif",
+            "https://media2.giphy.com/media/USsf3pBBT3WGyrYUGV/giphy.gif"
+        ];
+
+        // Obtener un gif aleatorio de Paquita Salas
+        function obtenerGifAleatorio() {
+            const randomIndex = Math.floor(Math.random() * gifs.length);
+            return gifs[randomIndex];
         }
 
-        // Llamamos a la función para actualizar el mensaje del día cuando se carga la página
-        updateDayMessage();
+        // Obtener los elementos
+        const boton = document.getElementById('descubre-btn');
+        const spinner = document.getElementById('spinner');
+        const gifContainer = document.getElementById('gif-container');
+        const paquitaGif = document.getElementById('paquita-gif');
+
+        // Evento al hacer clic en el botón
+        boton.addEventListener('click', function() {
+            // Mostrar el spinner
+            spinner.style.display = 'block';
+
+            // Ocultar el gif mientras se carga uno nuevo
+            gifContainer.style.display = 'none';
+
+            // Después de 2 segundos, mostrar el gif aleatorio
+            setTimeout(function() {
+                spinner.style.display = 'none'; // Ocultar spinner
+                paquitaGif.src = obtenerGifAleatorio(); // Establecer un gif aleatorio
+                gifContainer.style.display = 'block'; // Mostrar el gif
+            }, 2000);
+        });
     </script>
 
 </body>
