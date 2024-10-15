@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -39,7 +39,9 @@
     <h1 id="day-message">Lo siento, solo es...</h1>
     <button onclick="showPaquitaSalas()">Descubre qué Paquita Salas eres hoy</button>
 
+    <!-- El JavaScript va aquí dentro de esta etiqueta -->
     <script>
+        // Función para actualizar el mensaje según el día de la semana
         function updateDayMessage() {
             const days = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
             const today = new Date();
@@ -47,13 +49,15 @@
             document.getElementById('day-message').textContent = `Lo siento, solo es ${day}.`;
         }
 
+        // Función para mostrar un mensaje cuando se hace clic en el botón
         function showPaquitaSalas() {
             alert('¡Hoy eres Paquita Salas en su mejor versión!');
         }
 
-        // Actualizamos el mensaje al cargar la página
+        // Llamamos a la función para actualizar el mensaje del día cuando se carga la página
         updateDayMessage();
     </script>
-    
+
 </body>
 </html>
+
