@@ -1,45 +1,77 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>No es Viernes</title>
+    <title>No es Viernes - Paquita Salas</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Press Start 2P', cursive; /* Fuente retro */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f0f0f0;
-            color: #333;
+            background-color: #1a1a1a;
+            color: #fff;
+            text-align: center;
         }
         h1 {
-            font-size: 3em;
+            font-size: 2.5em;
+            margin-bottom: 20px;
         }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 1.5em;
+        .pixel-button {
+            display: inline-block;
+            padding: 20px;
+            font-size: 1.2em;
+            color: #fff;
+            background-color: #333;
+            border: 5px solid #ff00ff; /* Estilo pixel art */
+            text-transform: uppercase;
             cursor: pointer;
-            border: none;
-            background-color: #007BFF;
-            color: white;
-            border-radius: 5px;
+            transition: all 0.3s;
         }
-        button:hover {
-            background-color: #0056b3;
+        .pixel-button:hover {
+            background-color: #ff00ff;
+            color: #333;
+        }
+        #gif-container {
+            margin-top: 20px;
+            max-width: 300px;
+            max-height: 300px;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            display: none;
+        }
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .pixel-button {
+                font-size: 1em;
+                padding: 15px;
+            }
         }
     </style>
+    <!-- Incluye una fuente retro -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <h1 id="day-message">Lo siento, solo es...</h1>
-    <button onclick="showPaquitaSalas()">Descubre qué Paquita Salas eres hoy</button>
+    
+    <div class="pixel-button" onclick="showRandomGif()">
+        DESCUBRE QUÉ PAQUITA SALAS ERES HOY
+    </div>
 
-    <!-- El JavaScript va aquí dentro de esta etiqueta -->
+    <div id="gif-container">
+        <img id="random-gif" src="" alt="GIF de Paquita Salas">
+    </div>
+
     <script>
         // Función para actualizar el mensaje según el día de la semana
         function updateDayMessage() {
@@ -49,9 +81,19 @@
             document.getElementById('day-message').textContent = `Lo siento, solo es ${day}.`;
         }
 
-        // Función para mostrar un mensaje cuando se hace clic en el botón
-        function showPaquitaSalas() {
-            alert('¡Hoy eres Paquita Salas en su mejor versión!');
+        // Función para mostrar un GIF aleatorio de Paquita Salas
+        function showRandomGif() {
+            const gifs = [
+                'https://media.giphy.com/media/5WJ6SOKeSl3wmgExxi/giphy.gif', // GIF de Paquita saludando
+                'https://media.giphy.com/media/5ev4adJs7xMqgTuVXi/giphy.gif', // GIF de Paquita con gafas
+                'https://media.giphy.com/media/xT9IgIc0lryrxvqVGM/giphy.gif', // GIF de Paquita asombrada
+                'https://media.giphy.com/media/9JrJxf8EboUwJ5c3Sc/giphy.gif', // GIF de Paquita celebrando
+                'https://media.giphy.com/media/3ov9jNziFTMfzSumAw/giphy.gif'  // GIF de Paquita en una reunión
+            ];
+            const randomGif = gifs[Math.floor(Math.random() * gifs.length)];
+            const gifElement = document.getElementById('random-gif');
+            gifElement.src = randomGif;
+            gifElement.style.display = 'block'; // Mostrar el GIF
         }
 
         // Llamamos a la función para actualizar el mensaje del día cuando se carga la página
@@ -60,4 +102,3 @@
 
 </body>
 </html>
-
