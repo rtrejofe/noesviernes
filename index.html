@@ -19,7 +19,7 @@
             min-height: 100vh;
             text-align: center;
             margin: 0;
-            padding: 200px 20px 20px;
+            padding: 100px 20px 20px;
             box-sizing: border-box;
         }
 
@@ -30,7 +30,6 @@
             color: #ffffff;
             text-shadow: 4px 4px #ff33a2, 0px 0px 10px #000000;
             line-height: 1.5; /* Ajusta el valor para controlar la altura de línea */
-
         }
 
         /* Estilos para el texto del día */
@@ -130,6 +129,22 @@
     </div>
 
     <script>
+        // API Key de Giphy
+        const apiKey = 'bgYqpVfPPSeVEPcsIw34mWU2zH3BxXzy'; // Reemplaza con tu clave API
+
+        // Función para obtener GIFs de Paquita Salas desde la API de Giphy
+        function obtenerGifsDeGiphy() {
+            const url = `https://api.giphy.com/v1/gifs/search?q=paquita+salas&api_key=${apiKey}&limit=50`;
+
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => data.data.map(gif => gif.images.original.url)) // Extraer las URLs de los GIFs
+                .catch(error => {
+                    console.error('Error al obtener GIFs de Giphy:', error);
+                    return [];
+                });
+        }
+
         // Función para obtener el día de la semana
         function obtenerDiaSemana() {
             const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
@@ -166,34 +181,6 @@
         const diaSemana = obtenerDiaSemana();
         cambiarMensajeSegunDia(diaSemana);
 
-        // Array con enlaces a los gifs de Paquita Salas
-        const gifs = [
-            "https://media3.giphy.com/media/V72HiNEcrP6r80Xc44/giphy.gif",
-            "https://media2.giphy.com/media/ORjDIEmkhATyZvBUwy/giphy.gif",
-            "https://media3.giphy.com/media/l378sDdYsRm1fQgDu/giphy.gif",
-            "https://media2.giphy.com/media/ZCxMnnXHv3ig7E8H2R/giphy.gif",
-            "https://media3.giphy.com/media/26vIdHgAJkOFSfF8A/giphy.gif",
-            "https://media2.giphy.com/media/gdrPoU0SWneYYCUoW1/giphy.gif",
-            "https://media0.giphy.com/media/f9R6CU2gYLppMe0gve/giphy.gif",
-            "https://media1.giphy.com/media/3oFzme1oHVdYyNOzfi/giphy.gif",
-            "https://media2.giphy.com/media/5n045t1xLi6ktHh8Jk/giphy.gif",
-            "https://media2.giphy.com/media/USsf3pBBT3WGyrYUGV/giphy.gif",
-            "https://media3.giphy.com/media/PRo62NlI8OnkYPmrb3/200w.webp?cid=ecf05e47fyy26bhjjwf5fmpr8p4kwqveejamxqyps3z83wky&ep=v1_gifs_related&rid=200w.webp&ct=g",
-            "https://media0.giphy.com/media/12xDzluRMR2eRESUio/200w.webp?cid=ecf05e47ylr7nbzzgmdyztjftkpoduplzdck1e5u4gsivjgv&ep=v1_gifs_related&rid=200w.webp&ct=g",
-            "https://media3.giphy.com/media/52FwwTBYLKolvzkj17/200w.webp?cid=ecf05e47ylr7nbzzgmdyztjftkpoduplzdck1e5u4gsivjgv&ep=v1_gifs_related&rid=200w.webp&ct=g",
-            "https://media1.giphy.com/media/uTrNTz85FKyJ5iZXyH/200w.webp",
-            "https://media3.giphy.com/media/L3Pop8UpGlPJTXcCz2/200w.webp?cid=ecf05e47qy4611yjj74m9v0rb2wdgpf4s375c61ftqmfg4qf&ep=v1_gifs_related&rid=200w.webp&ct=g",
-            "https://media3.giphy.com/media/L3Pop8UpGlPJTXcCz2/200w.webp?cid=ecf05e47qy4611yjj74m9v0rb2wdgpf4s375c61ftqmfg4qf&ep=v1_gifs_related&rid=200w.webp&ct=g",
-            "https://media3.giphy.com/media/MUlOGjRDQy9TGd5a6E/200w.webp?cid=ecf05e476ckd9yotqtne0dnrc0khrifuj1eqh6qamaj703cf&ep=v1_gifs_related&rid=200w.webp&ct=g",
-            "https://media3.giphy.com/media/9JlKcAPL4Ey1QzgmpG/200w.webp?cid=ecf05e476ckd9yotqtne0dnrc0khrifuj1eqh6qamaj703cf&ep=v1_gifs_related&rid=200w.webp&ct=g"
-        ];
-
-        // Obtener un gif aleatorio de Paquita Salas
-        function obtenerGifAleatorio() {
-            const randomIndex = Math.floor(Math.random() * gifs.length);
-            return gifs[randomIndex];
-        }
-
         // Obtener los elementos
         const boton = document.getElementById('descubre-btn');
         const spinner = document.getElementById('spinner');
@@ -208,15 +195,24 @@
             // Ocultar el gif mientras se carga uno nuevo
             gifContainer.style.display = 'none';
 
-            // Después de 2 segundos, mostrar el gif aleatorio
-            setTimeout(function() {
-                spinner.style.display = 'none'; // Ocultar spinner
-                paquitaGif.src = obtenerGifAleatorio(); // Establecer un gif aleatorio
-                gifContainer.style.display = 'block'; // Mostrar el gif
-            }, 2000);
+            // Obtener GIFs de Giphy
+            obtenerGifsDeGiphy().then(gifs => {
+                if (gifs.length > 0) {
+                    // Seleccionar uno aleatorio y mostrarlo
+                    const gifAleatorio = gifs[Math.floor(Math.random() * gifs.length)];
+                    paquitaGif.src = gifAleatorio;
+                }
+
+                // Ocultar el spinner y mostrar el GIF
+                setTimeout(function() {
+                    spinner.style.display = 'none';
+                    gifContainer.style.display = 'block';
+                }, 2000);
+            });
         });
     </script>
 
 </body>
 </html>
+
 
