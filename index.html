@@ -87,9 +87,9 @@
             border: 4px solid #ffffff;
         }
 
-        /* Clase especial para imágenes más grandes */
+        /* Clase especial para imágenes más grandes en viernes y sábado */
         .especial-dia {
-            max-width: 600px;
+            max-width: 800px;
         }
 
         /* Ajustes de responsividad */
@@ -115,7 +115,7 @@
     <img id="paquita-img" src="images/paquita_salas.png" alt="Paquita Salas" style="max-width: 200px;">
 
     <!-- Texto del día de la semana -->
-    <h1>Lo siento, solo es <span id="dia-semana"></span></h1>
+    <h1 id="mensaje-dia">Lo siento, solo es <span id="dia-semana"></span></h1>
 
     <!-- Botón para descubrir qué Paquita Salas eres hoy -->
     <button id="descubre-btn">¿Qué Product Manager eres hoy?</button>
@@ -154,25 +154,25 @@
 
         // Función para cambiar el mensaje y la imagen según el día de la semana
         function cambiarMensajeSegunDia(diaSemana) {
-            const mensajeDia = document.getElementById('dia-semana');
+            const h1 = document.getElementById('mensaje-dia');
             const paquitaImg = document.getElementById('paquita-img');
             
             // Resetear cualquier clase especial
             paquitaImg.classList.remove('especial-dia');
 
             if (diaSemana === 'viernes') {
-                mensajeDia.textContent = '¡Es vieeeeeeeeeeeeeeeernes!';
+                h1.textContent = '¡Es vieeeeeeeeeeeeeeeernes!'; // Cambiar mensaje
                 paquitaImg.src = 'images/magui_salas.jpg'; // Imagen especial para viernes
                 paquitaImg.classList.add('especial-dia'); // Aumentar tamaño para viernes
             } else if (diaSemana === 'sábado') {
-                mensajeDia.textContent = '¿Qué haces aquí? Es sábado, tira a socializar.';
+                h1.textContent = '¿Qué haces aquí? Es sábado, tira a socializar.'; // Cambiar mensaje
                 paquitaImg.src = 'images/magui_salas.jpg'; // Imagen especial para sábado
                 paquitaImg.classList.add('especial-dia'); // Aumentar tamaño para sábado
             } else if (diaSemana === 'domingo') {
-                mensajeDia.textContent = 'Mañana es lunes, una lloradita y a seguir.';
+                h1.textContent = 'Mañana es lunes, una lloradita y a seguir.'; // Mensaje normal para domingo
                 paquitaImg.src = 'images/paquita_salas.png'; // Imagen normal para domingo
             } else {
-                mensajeDia.textContent = diaSemana; // Solo mostrar el día de la semana para lunes a jueves
+                h1.textContent = `Lo siento, solo es ${diaSemana}`; // Solo mostrar el día de la semana para lunes a jueves
                 paquitaImg.src = 'images/paquita_salas.png'; // Imagen normal para lunes a jueves
             }
         }
@@ -214,5 +214,6 @@
 
 </body>
 </html>
+
 
 
